@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 
     let backendless = Backendless.sharedInstance()
     var currentUser: BackendlessUser?
+    let isStayLoggedIn:Bool  = false
     
     class Accounts : NSObject {
         
@@ -46,7 +47,7 @@ class ViewController: UIViewController {
         //backendless.userService.registering(user)
         //print("registered")
         
-        loginUserAsync()
+        //loginUserAsync()
         
         // check to see if keep logged in is turned on.
         if isStayLoggedIn == true{
