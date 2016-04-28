@@ -171,23 +171,25 @@ class ViewController: UIViewController {
     func singleStepRetrieval() {
         
         let dataQuery = BackendlessDataQuery()
-        let queryOptions = QueryOptions()
-        queryOptions.related = ["relAccounts"]
+        //let queryOptions = QueryOptions()
+        //queryOptions.related = ["relAccounts"]
         //queryOptions.addRelated("relAccounts")
-        dataQuery.queryOptions = queryOptions
+        //dataQuery.queryOptions = queryOptions
         dataQuery.whereClause = "email = '\(currentUser!.email)'"
         
+        print("Relations   **************'")
+        
         var error: Fault?
-        let bc = backendless.data.of(Users.ofClass()).find(dataQuery, fault: &error)
+        let bc = backendless.persistenceService.of(Users.ofClass()).find(dataQuery, fault: &error)
         if error == nil {
             let currentAccount = bc.getCurrentPage()
-            print("Loaded \(currentAccount.count) acccounts for user \(currentUser!.email!)")
             print("Total Objects \(bc.totalObjects)")
+            print("Loaded \(currentAccount.count) acccounts for user \(currentUser!.email!)")
             
             
-            for relatedAccount in currentAccount {
-                
-                print("Account name = \(relatedAccount.NumberOrNickname)")
+            for relatedAccount in currentAccount as! [Accounts]{
+                print("Account name: \(relatedAccount.NumberOrNickname)" )
+                //print("Account name <\(relatedAccount.ofClass())> Balance = \(relatedAccount.Balance)")
             }
             
             //print("Accounts have been retrieved: \(bc.data)")
